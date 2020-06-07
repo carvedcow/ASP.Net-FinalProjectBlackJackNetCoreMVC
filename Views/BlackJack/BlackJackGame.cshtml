@@ -1,0 +1,65 @@
+﻿@model BlackJackFinalProjectNetCoreMVC.ViewModels.GameViewModel
+@{
+    ViewData["Title"] = "BlackJackGame";
+}
+
+<h2>BlackJack Game Page</h2>
+<hr />
+
+<!-- Message -->
+<h3>@ViewData["Message"]</h3>
+
+<h4>Player's Money: @Model.player.money</h4>
+<h4>Player's Bet: @Model.game.bet</h4>
+
+<!-- Playing Field -->
+<div>
+    <!-- Dealer Field -->
+    <h3>Dealer: @Model.dealer.score</h3>
+    <div>
+        @if (Model.dealer.hand.Count == 1)
+        {
+            string imgLink = Model.dealer.hand[0].value + Model.dealer.hand[0].suit + ".jpg";
+            <img src="~/images/@imgLink" alt="card_back" width="150" height="250" />
+            <img src="~/images/Red_back.jpg" alt="card_back" width="150" height="250" />
+
+        }
+        else
+        {
+            @foreach (Card card in Model.dealer.hand)
+            {
+                string imgLink = @card.value + @card.suit + ".jpg";
+                <img src="~/images/@imgLink" alt="card_back" width="150" height="250" />
+            }
+        }
+    </div>
+    <br />
+
+    <!-- Player Field -->
+    <h3>Player: @Model.player.score</h3>
+    <div>
+        @foreach (Card card in Model.player.hand)
+        {
+            string imgLink = @card.value + @card.suit + ".jpg";
+            <img src="~/images/@imgLink" alt="card_back" width="150" height="250" />
+        }
+    </div>
+
+</div>
+<br />
+<!-- Button Form -->
+<form method="post">
+    <div id="gameButtons">
+        @if (Model.game.status == Status.gameOn)
+        {
+            <button class="btn btn-success" type="submit" id="hit" name="action" value="hit">Hit</button>
+            <button class="btn btn-success" type="submit" id="stand" name="action" value="stand">Stand</button>
+        }
+        else
+        {
+            <button class="btn btn-success" type="submit" id="stand" name="action" value="restart">Play Again</button>
+        }
+    </div>
+</form>
+
+
